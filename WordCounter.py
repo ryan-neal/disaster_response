@@ -3,8 +3,20 @@ import pandas as pd
 from sklearn.base import BaseEstimator, TransformerMixin
 
 class WordCounter(BaseEstimator, TransformerMixin):
-    def fit(self, X, Y):
+    def wordlength(self, text):
+        length = 0
+        for word in text.split(" "):
+            length += 1
+        return length
+
+    def fit(self, x, y=None):
         return self
 
-    def transform(self, X):
-        return pd.Series(X).apply(lambda x: len(str(x).split(" ")))
+    def transform(self, x):
+        X_tagged = pd.Series(x).apply(self.wordlength)
+        print("############################################")
+        print(X_tagged, X_tagged.shape)
+        df = pd.DataFrame(X_tagged)
+        print(df)
+        return df
+        
