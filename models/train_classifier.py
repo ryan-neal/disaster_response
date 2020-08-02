@@ -23,6 +23,7 @@ from sklearn.svm import LinearSVC
 from sklearn.metrics import precision_recall_fscore_support as score
 from sklearn.decomposition import TruncatedSVD
 from wordcounter import WordCounter
+import joblib
 import sys
 
 def load_data(database_name):
@@ -74,14 +75,15 @@ def build_model():
 
     return pipeline
 
-def evaluate_model(model, X_test, Y_test, category_names):
+def evaluate_model(model, X_test, Y_test, categories):
     Y_pred = model.predict(X_test)
-    Y_pred_df = pd.DataFrame(Y_pred, columns = Y.columns)
+    Y_pred_df = pd.DataFrame(Y_pred, columns = categories)
     for column in Y_test.columns:
         precision, recall, fscore, support = score(Y_test[column], Y_pred_df[column], average="weighted")
         print(column, precision, recall, fscore)
 
-
+def save_model(model, filename):
+    joblib.dump(model, open(filename, 'wb'))
 
 def main():
     if len(sys.argv) == 3:

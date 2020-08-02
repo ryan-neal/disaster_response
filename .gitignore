@@ -2,3 +2,4 @@ disaster
 .env
 *.ipynb_*
 *__pycache__*
+*.pkl
