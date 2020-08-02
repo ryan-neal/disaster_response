@@ -14,9 +14,6 @@ class WordCounter(BaseEstimator, TransformerMixin):
 
     def transform(self, x):
         X_tagged = pd.Series(x).apply(self.wordlength)
-        print("############################################")
-        print(X_tagged, X_tagged.shape)
         df = pd.DataFrame(X_tagged)
-        print(df)
         return df
         
